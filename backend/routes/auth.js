@@ -3,6 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const JWT_SECRET = "harryisagoodb$oy";
 const jwt = require("jsonwebtoken");
+let fetchuser = require("../middleware/fetchuser")
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
 router.post("/createuser", [
@@ -80,5 +81,20 @@ router.post("/login", [
       console.error("Please try to login with correct credentials");
       res.status(500).send("Internal server error");
     }
+})
+
+
+
+// Route 3: GET loggedin User details using: POST
+router.post("/getuser", fetchuser, async (req, res)=>{
+  try{
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.send(user);
+  }
+  catch(err){
+    console.error("Please try to login with correct credentials");
+    res.status(500).send("Internal server error");
+  }
 })
 module.exports = router;
