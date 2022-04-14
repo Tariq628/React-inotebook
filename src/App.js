@@ -14,7 +14,6 @@ function App() {
       <NoteState>
       <Router>
       <Navbar/>
-      
       <div className="container my-3">
       <Routes>
         <Route exact path='/' element={<Home/>}> </Route>
