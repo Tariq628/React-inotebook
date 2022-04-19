@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 let fetchuser = require("../middleware/fetchuser")
 const router = express.Router();
 const {body, validationResult} = require("express-validator");
+
 router.post("/createuser", [
     body('name', "Enter valid name: ").isLength({ min:5}),
     body('email', "Enter valid email: ").isEmail(),
@@ -18,9 +19,10 @@ router.post("/createuser", [
     let user = await User.findOne({email: req.body.email});
     try{
       if (user) {
-        return res.status(400).json({error: "Sorry a user with this email already exist"})
+        return res.status(400).json({error: "Sorry a user with this email already exist"});
     }
-    const salt = await bcrypt.genSaltSync(10);
+    const salt = bcrypt.genSaltSync(10);
+    console.log(salt);
     const secPass = await bcrypt.hash(req.body.password, salt);
     user = await User.create({
         name: req.body.name,
