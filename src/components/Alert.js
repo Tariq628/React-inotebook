@@ -3,11 +3,11 @@ import React from 'react'
 function Alert(props) {
     return (
         <div>
-            <div className="alert alert-success" role="alert">
-               {props.message} 
-            </div>
+            {props.alert && <div className= {`alert alert-${props.alert.type}`} role="alert">
+                {props.alert.message}
+            </div>}
         </div>
     )
 }
 
-export default Alert
+export default Alert;
